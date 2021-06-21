@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 29
+//    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 29
+
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compileOnly "androidx.appcompat:appcompat:1.2.0"
+}
