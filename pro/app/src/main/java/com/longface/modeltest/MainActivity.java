@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.lang.reflect.ParameterizedType;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        AAA instance = new Abc<AAA>().getInstanceOfT();
+        System.out.println(instance.getClass());
     }
 
     @Override
@@ -50,5 +55,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class Abc<T> {
+        T getInstanceOfT()
+        {
+            ParameterizedType superClass = (ParameterizedType) getClass().getGenericSuperclass();
+            Class<T> type = (Class<T>) superClass.getActualTypeArguments()[0];
+            try
+            {
+                return type.newInstance();
+            }
+            catch (Exception e)
+            {
+                // Oops, no default constructor
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    static class SubClass extends Abc<AAA>
+    {
+    }
+
+    static class AAA {
+
     }
 }
